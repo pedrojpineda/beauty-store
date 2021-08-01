@@ -1,0 +1,36 @@
+@charset "UTF-8";
+/* ESTILOS GENERALES */
+body {
+  font-family: 'Montserrat', sans-serif; }
+
+a {
+  text-decoration: none;
+  color: inherit; }
+
+/* HEADER */
+header {
+  padding: 20px 0; }
+  header .active {
+    color: #00a79d !important;
+    background-color: white !important;
+    font-weight: 700; }
+
+.logo img {
+  max-width: 200px; }
+
+.navbar-collapse {
+  justify-content: flex-end; }
+
+nav ul li a {
+  padding: 0 10px;
+  font-weight: 600;
+  color: #006699;
+  transition-property: all;
+  transition-duration: 0.5s; }
+  nav ul li a:hover {
+    color: #00a79d !important;
+    background-color: white !important;
+    font-weight: 700; }
+
+.dropdown-menu {
+  border: 0; }

@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './style.css';
+import NavBar from './components/NavBar';
 
-ReactDOM.render(<h1>Beauty Store</h1>,
+ReactDOM.render(<NavBar />,
     document.getElementById('root'));
