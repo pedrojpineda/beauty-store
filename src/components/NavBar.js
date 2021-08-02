@@ -1,6 +1,7 @@
 import React from 'react';
+import CartWidget from './CartWidget';
 
-export default function NavBar() {
+const NavBar = () => {
     return (
         <header>
             <div className="container">
@@ -28,7 +29,7 @@ export default function NavBar() {
                                 </ul>
                             </li>
                             <li className="nav-item"><a href="#">Blog</a></li>
-                            <li className="nav-item"><a href="#">Carrito</a></li>
+                            <li className="nav-item"><a href="#"><CartWidget /></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -36,3 +37,4 @@ export default function NavBar() {
         </header>
     )
 }
+export default NavBar;
