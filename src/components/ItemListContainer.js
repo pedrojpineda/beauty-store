@@ -1,27 +1,21 @@
 import React from 'react';
+import ItemCount from './ItemCount';
 
-class ItemListContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            greeting: 'Medicamentos, productos de belleza y de cuidado de la piel'
-        };
-    }
-
-    render() {
-        let styles = {
-            textAlign: 'center',
-            background: '#00a79d',
-            color: 'white',
-            padding: 10,
-            fontWeight: 700,
-            fontSize: 30
-        };
-        
-        return (
-            <h1 style={styles}>{this.state.greeting}</h1>
-        );
-    }
+const ItemListContainer = (props) => {
+    return (
+        <main>
+            <h1>{props.greeting}</h1>
+            <section className="categoria-productos">
+                <div className="container">
+                    <div className="row flex">
+                        <div className="col-lg-4 col-md-6 col-sm-6">
+                            <ItemCount stock={5} initial={1}/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
 }
 
 export default ItemListContainer;
