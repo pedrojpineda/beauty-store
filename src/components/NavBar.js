@@ -6,7 +6,7 @@ const NavBar = () => {
         <header>
             <div className="container">
                 <nav className="navbar navbar-expand-md navbar-light bg-transparent">
-                    <a className="navbar-brand logo" href="#"><img className="img-fluid" src="logo.png"
+                    <a className="navbar-brand logo" href="#"><img className="img-fluid" src="./imagenes/logo.png"
                         alt="Logo de Beauty Store" title="Logo de Beauty Store" /></a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
