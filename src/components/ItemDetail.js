@@ -18,7 +18,7 @@ const ItemDetail = (props) => {
                         <div className="producto">
                             <h2>{props.title}</h2>
                             <p>{props.description}</p>
-                            <span className="precios">$ {props.price}</span>
+                            <span className="precio">$ {props.price}</span>
                         </div>
                     </div>
                 </div>

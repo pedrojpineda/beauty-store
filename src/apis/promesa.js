@@ -22,8 +22,10 @@ export const listaProductos = [
     }
 ];
 
-export const promesa = new Promise((resolve, reject) => {
-    setTimeout(function () {
+export const getItems = new Promise((resolve, reject) => {
+    setTimeout(() => {
         resolve(listaProductos);
-    }, 2000);
+    }, 5000);
+    return listaProductos;
 });
+

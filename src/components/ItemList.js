@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Item from './Item';
-import { listaProductos, promesa } from '../apis/promesa';
+import { listaProductos, getItems } from '../apis/promesa';
 
 const ItemList = () => {
     const [productos, setProductos] = useState(listaProductos);
 
     useEffect(() => {
-        promesa.then();
+        getItems.then();
     });
 
     return (

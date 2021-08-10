@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from './NavBar';
 //import ItemListContainer from './ItemListContainer';
-import ItemDetailContainer from './ItemListContainer';
+import ItemDetailContainer from './ItemDetailContainer';
 
 const App = () => {
     return <>
