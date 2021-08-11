@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Item from './Item';
-import { listaProductos, getItems } from '../apis/promesa';
+import getItems from '../apis/promesa';
 
 const ItemList = () => {
-    const [productos, setProductos] = useState(listaProductos);
-
+    const [productos, setProductos] = useState([]);
+    
     useEffect(() => {
-        getItems.then();
-    });
+        getItems().then(productos => {
+            setProductos(productos);
+        });
+    },[]);
 
     return (
         <section className="categoria-productos">

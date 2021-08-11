@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import ItemDetail from './ItemDetail';
-import { listaProductos, getItems } from '../apis/promesa';
+import getItems from '../apis/promesa';
 
 const ItemDetailContainer = (props) => {
-    const [productos, setProductos] = useState(listaProductos);
-    const [itemId, setItemId] = useState(2);
-    
-    let producto = productos.find( item => item.id === itemId );
-    
+    const [productos, setProductos] = useState([]);
+         
     useEffect(() => {
-        getItems.then();
-    });
+        getItems().then(productos => {
+            setProductos([productos.find( producto => producto.id === props.productoId )]);
+        });
+    },[]);
 
     return (
         <main>
             <h1>{props.greeting}</h1>
-                <ItemDetail key={producto.id} title={producto.title} description={producto.description} price={producto.price} pictureUrl={producto.pictureUrl} />
+            {productos.map(producto => <ItemDetail key={producto.id} title={producto.title} description={producto.description} price={producto.price} pictureUrl={producto.pictureUrl} />)}
         </main>
     );
 }

@@ -1,4 +1,4 @@
-export const listaProductos = [
+const listaProductos = [
     {
         id: 1,
         title: 'Crema Nutritiva Plus 50',
@@ -22,10 +22,18 @@ export const listaProductos = [
     }
 ];
 
-export const getItems = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve(listaProductos);
-    }, 5000);
-    return listaProductos;
-});
+function getItems() {
+    const promesa = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(listaProductos);
+        }, 2000);
+    });
 
+    return promesa.then(res => {
+        return res;
+    }, err => {
+        console.log(err)
+    });
+}
+
+export default getItems;
