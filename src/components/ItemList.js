@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Item from './Item';
-import getItems from '../apis/promesa';
+import getItems from '../apis/dataBases';
 
-const ItemList = () => {
-    const [productos, setProductos] = useState([]);
+const ItemList = ({categoria}) => {
+    const [category, setCategory] = useState([]);
+    const [categoryTitle, setCategoryTitle] = useState([]);
     
+    const { id, categoryName } = categoria;
+
     useEffect(() => {
         getItems().then(productos => {
-            setProductos(productos);
+            setCategory(productos.filter(producto => producto.category == id).map(producto => <Item item={producto} />));
+            setCategoryTitle(categoryName);
         });
-    },[]);
+    });
 
     return (
         <section className="categoria-productos">
             <div className="container">
+                <h2>{categoryTitle}</h2>
                 <div className="row flex">
-                    {productos.map(producto => <Item key={producto.id} title={producto.title} description={producto.description} price={producto.price} pictureUrl={producto.pictureUrl} />)}
+                    {category}
                 </div>
             </div>
         </section>

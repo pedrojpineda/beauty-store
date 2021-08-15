@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import ItemDetail from './ItemDetail';
-import getItems from '../apis/promesa';
+import getItems from '../apis/dataBases';
+import { useParams } from 'react-router-dom';
 
-const ItemDetailContainer = (props) => {
-    const [productos, setProductos] = useState([]);
-         
+const ItemDetailContainer = () => {
+    const [producto, setProducto] = useState([]);
+    const { itemId } = useParams();
+    
     useEffect(() => {
         getItems().then(productos => {
-            setProductos([productos.find( producto => producto.id === props.productoId )]);
+            setProducto(<ItemDetail item={productos.find( item => item.id === Number(itemId))} />);
         });
-    },[]);
+        
+    },[itemId]);
 
     return (
         <main>
-            <h1>{props.greeting}</h1>
-            {productos.map(producto => <ItemDetail key={producto.id} title={producto.title} description={producto.description} price={producto.price} pictureUrl={producto.pictureUrl} />)}
+            <h1>Medicamentos, productos de belleza y de cuidado de la piel</h1>
+            {producto}
         </main>
     );
 }

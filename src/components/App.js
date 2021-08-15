@@ -1,14 +1,23 @@
 import React from 'react';
-import NavBar from './NavBar';
-//import ItemListContainer from './ItemListContainer';
-import ItemDetailContainer from './ItemDetailContainer';
+import { BrowserRouter, Switch, Route }  from 'react-router-dom';
+import ItemListContainer from '../components/ItemListContainer';
+import ItemDetailContainer from '../components/ItemDetailContainer';
+import NavBar from '../components/NavBar';
+import NotFound from '../components/NotFound';
 
 const App = () => {
-    return <>
+
+    return (
+        <BrowserRouter>
         <NavBar />
-        {/*<ItemListContainer greeting='Medicamentos, productos de belleza y de cuidado de la piel' />*/}
-        <ItemDetailContainer greeting='Medicamentos, productos de belleza y de cuidado de la piel' productoId={3} />
-    </>
+            <Switch>
+                <Route exact path="/" component={ItemListContainer} />
+                <Route path="/category/:categoryId" component={ItemListContainer} />
+                <Route path="/item/:itemId" component={ItemDetailContainer} />
+                <Route path="*" component={NotFound} />
+            </Switch>
+        </BrowserRouter>
+    )
 }
 
 export default App;

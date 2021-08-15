@@ -1,15 +1,20 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const Item = (props) => {
+const Item = ({item}) => {
+
+    const { id, category, pictureUrl, title, description, price } = item;
 
     return (
         <div className="col-lg-4 col-md-6 col-sm-6">
-            <article>
-                <img className="img-fluid" src={"./imagenes/" + props.pictureUrl} alt={props.title} />
-                <h2 className="h3">{props.title}</h2>
-                <p>{props.description}</p>
-                <span className="precio">$ {props.price}</span>
-            </article>
+            <NavLink to={`/item/${id}`}>
+                <article>
+                    <img className="img-fluid" src={`../imagenes/${category}/${pictureUrl}`} alt={title} />
+                    <h2 className="h3">{title}</h2>
+                    <p>{description}</p>
+                    <span className="precio">$ {price}</span>
+                </article>
+            </NavLink>
         </div>
     );
 }
