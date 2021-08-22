@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
 const ItemCount = (props) => {
-    const [initial, setContador] = useState(props.initial);
-    const [stock] = useState(props.stock);
+    const {initial, stock, setCantidadCount, setShowItemCount } = props;
+    const [cantidad, setCantidad] = useState(initial);
+    const [inventario, setStock] = useState(stock);
     const [botonSumar, setBotonSumar] = useState(false);
     const [botonRestar, setBotonRestar] = useState(true);
     const [botonAgregar, setBotonAgregar] = useState(false);
 
-
     const onSumar = () => {
-        if (initial >= props.initial && initial <= stock - 1) {
-            setContador(initial + 1);
+        if (cantidad >= initial && cantidad <= inventario - 1) {
+            setCantidad(cantidad + 1);
             setBotonRestar(false);
         } else {
             setBotonSumar(true);
@@ -19,34 +19,33 @@ const ItemCount = (props) => {
     }
 
     const onRestar = () => {
-        if (initial >= props.initial + 1) {
-            setContador(initial - 1);
+        if (cantidad >= initial + 1) {
+            setCantidad(cantidad - 1);
             setBotonSumar(false);
         } else {
             setBotonRestar(true);
         }
     }
-
+    
     const onAdd = () => {
-        if (stock == 0) {
+        if (inventario == 0) {
             setBotonAgregar(true);
         } else {
-            const cantidadProducto = document.querySelector('p');
-            cantidadProducto.textContent = initial;
+            setCantidadCount(cantidad);
+            setShowItemCount(false);
         }
     }
 
     return (
-        <article>
-            <h2 className="h3">Nombre de producto</h2>
+        <>
             <div className="cantidad">
                 <button type="button" onClick={onSumar} className="boton" disabled={botonSumar}><i className="fas fa-plus"></i></button>
-                <input type="number" className="form-control d-inline" aria-label="Cantidad" value={initial} disabled={true} />
+                <input type="number" className="form-control d-inline" aria-label="Cantidad" value={cantidad} disabled={true} />
                 <button type="button" onClick={onRestar} className="boton" disabled={botonRestar} ><i className="fas fa-minus"></i></button>
+                <a onClick={onAdd} className="boton" disabled={botonAgregar}><i className="fas fa-cart-plus"></i>Agregar al carrito</a>
             </div>
-            <a onClick={onAdd} className="boton" disabled={botonAgregar}><i className="fas fa-cart-plus"></i>Agregar al carrito</a>
-            <p></p>
-        </article>
+            
+        </>
     )
 }
 
