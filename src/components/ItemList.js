@@ -6,7 +6,7 @@ const ItemList = ({categoria}) => {
     const [category, setCategory] = useState([]);
     const [categoryTitle, setCategoryTitle] = useState([]);
     
-    const { id, categoryName } = categoria;
+    const { key, id, categoryName } = categoria;
 
     useEffect(() => {
         getItems().then(productos => {

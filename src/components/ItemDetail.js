@@ -1,11 +1,13 @@
-import React, { useState, useEffect }from "react";
+import React, { useState, useContext }from "react";
 import ItemCount, {} from "./ItemCount";
 import { NavLink } from 'react-router-dom';
+import { CartContext } from "../context/CartContext";
 
 const ItemDetail = ({item}) => {
-    const { title, category, price, description, pictureUrl } = item;
+    const { key, title, category, price, description, pictureUrl } = item;
     const [ cantidadCount, setCantidadCount ] = useState(0);
     const [ showItemCount, setShowItemCount ] = useState(true);
+    const { removeItem } = useContext(CartContext);
 
     return (
         <section>
@@ -25,8 +27,9 @@ const ItemDetail = ({item}) => {
                             <h2>{title}</h2>
                             <p>{description}</p>
                             <span className="precio">$ {price}</span>
-                            {showItemCount && <ItemCount setCantidadCount={setCantidadCount} setShowItemCount={setShowItemCount} initial={1} stock={5} />}
-                            {!showItemCount && <><p>Se han agregado <strong> {cantidadCount} </strong>{title} al carrito</p> <NavLink to={'/cart'} className="boton"><i class="fas fa-cash-register"></i>Terminar mi compra</NavLink></>}
+                            {showItemCount && <ItemCount setCantidadCount={setCantidadCount} setShowItemCount={setShowItemCount} initial={1} stock={5} item={item}/>}
+                            {!showItemCount && <><p>Se han agregado <strong> {cantidadCount} </strong>{title} al carrito</p> <NavLink to={'/cart'} className="boton"><i className="fas fa-cash-register"></i>Terminar mi compra</NavLink></>}
+                            <a onClick={removeItem(item)} className="boton"><i className="fas fa-cart-plus"></i>Borrar</a>
                         </div>
                     </div>
                 </div>
