@@ -6,11 +6,11 @@ const ItemList = ({categoria}) => {
     const [category, setCategory] = useState([]);
     const [categoryTitle, setCategoryTitle] = useState([]);
     
-    const { key, id, categoryName } = categoria;
+    const { id, categoryName } = categoria;
 
     useEffect(() => {
         getItems().then(productos => {
-            setCategory(productos.filter(producto => producto.category == id).map(producto => <Item item={producto} />));
+            setCategory(productos.filter(producto => producto.category === id).map(producto => <Item key={producto.id} item={producto} />));
             setCategoryTitle(categoryName);
         });
     });

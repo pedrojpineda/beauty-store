@@ -18,7 +18,7 @@ const NavBar = () => {
                         <ul className="navbar-nav mb-2 mb-lg-0">
                             <li className="nav-item"><NavLink to={'/'} className="active">Inicio</NavLink></li>
                             <li className="nav-item dropdown">
-                                <a className="dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                <a className="dropdown-toggle" href="/" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     Categorías
                                 </a>
@@ -29,8 +29,8 @@ const NavBar = () => {
                                     <li><NavLink to={'/category/medicamentos'} className="dropdown-item">Medicamentos</NavLink></li>
                                 </ul>
                             </li>
-                            <li className="nav-item"><a href="#">Blog</a></li>
-                            <li className="nav-item"><a href="#"><CartWidget /></a></li>
+                            <li className="nav-item"><a href="/">Blog</a></li>
+                            <li className="nav-item"><NavLink to={'/cart'}><CartWidget /></NavLink></li>
                         </ul>
                     </div>
                 </nav>

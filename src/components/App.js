@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ItemListContainer from '../components/ItemListContainer';
 import ItemDetailContainer from '../components/ItemDetailContainer';

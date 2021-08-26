@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const Item = ({ item }) => {
 
-    const { key, id, category, pictureUrl, title, description, price } = item;
+    const { id, category, pictureUrl, title, description, price } = item;
 
     return (
         <div className="col-lg-4 col-md-6 col-sm-6">

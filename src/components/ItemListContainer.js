@@ -9,7 +9,7 @@ const ItemListContainer = () => {
     
     useEffect(() => {
         if (!categoryId) {
-            setCategory(categories.map(category => <ItemList categoria={category}/>));
+            setCategory(categories.map(category => <ItemList key={category.id} categoria={category}/>));
         } else {
             setCategory(<ItemList categoria={categories.find( categoria => categoria.id === categoryId)}/>);
         };
