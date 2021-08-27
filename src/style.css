@@ -244,7 +244,7 @@ article, .producto {
     color: white; }
   .carrito td {
     background-color: white;
-    width: 20%; }
+    /*width: 20%;*/ }
   .carrito img {
     max-width: 100px; }
   .carrito .producto-carrito {

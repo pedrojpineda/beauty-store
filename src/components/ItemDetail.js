@@ -25,7 +25,7 @@ const ItemDetail = ({item}) => {
                             <h2>{title}</h2>
                             <p>{description}</p>
                             <span className="precio">$ {price}</span>
-                            <ItemCount setCantidadCount={setCantidadCount} setShowItemCount={setShowItemCount} initial={1} stock={5} item={item}/>
+                            {showItemCount && <ItemCount setCantidadCount={setCantidadCount} setShowItemCount={setShowItemCount} initial={1} stock={5} item={item}/>}
                             {!showItemCount && <><p>Se han agregado <strong> {cantidadCount} </strong>{title} al carrito</p> <NavLink to={'/cart'} className="boton"><i className="fas fa-cash-register"></i>Terminar mi compra</NavLink></>}
                         </div>
                     </div>

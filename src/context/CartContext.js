@@ -9,7 +9,19 @@ export const CartProvider = ({ children }) => {
         console.log("carrito", carrito);
     }, [carrito]);
 
-    const addItem = ( item, cantidad, onAdd ) => {
+    const cantidadesCarrito = () => {
+        if (carrito.length > 0) {
+            let cantidades = carrito.map((producto) => {
+                return producto.cantidad;
+            });
+
+            let cantidadTotal = cantidades.reduce((a, b) => a + b);
+            console.log(cantidadTotal);
+            return cantidadTotal;
+        }
+    }
+
+    const addItem = (item, cantidad, onAdd) => {
         const isInCart = carrito.some(producto => producto.item.id === item.id);
         if (!isInCart) {
             setCarrito([...carrito, { item: item, cantidad: cantidad }]);
@@ -22,14 +34,17 @@ export const CartProvider = ({ children }) => {
         onAdd();
     }
 
-    const removeItem = ( item ) => {
-        setCarrito(carrito.filter( producto => producto.item.id !== item.id));
-        console.log(carrito);
+    const removeItem = (id) => {
+        let confirmaEliminar = window.confirm('¿Estás seguro que deseas eliminar este producto del carrito?');
+        if (confirmaEliminar) {
+            setCarrito(carrito.filter(producto => producto.item.id !== id));
+            console.log(carrito);
+        }
     };
-   
+
     const clear = () => setCarrito([]);
 
-    return <CartContext.Provider value={{ addItem, removeItem, clear }}>
+    return <CartContext.Provider value={{ carrito, addItem, removeItem, clear, cantidadesCarrito }}>
         {children}
     </CartContext.Provider>
 }
