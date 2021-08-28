@@ -4,10 +4,31 @@ export const CartContext = createContext({});
 
 export const CartProvider = ({ children }) => {
     const [carrito, setCarrito] = useState([]);
+    const [iva, setIva] = useState(0.19);
+    const [gastosEnvio, setGastosEnvio] = useState(10000);
 
     useEffect(() => {
         console.log("carrito", carrito);
     }, [carrito]);
+
+    const subtotalCarrito = () => {
+        if (carrito.length > 0) {
+            let subtotales = carrito.map((producto) => {
+                return producto.cantidad * producto.item.price;
+            });
+
+            let subtotal = subtotales.reduce((a, b) => a + b);
+            return subtotal;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    const totalCarrito = () => {
+        let total = subtotalCarrito() + (subtotalCarrito() * iva) + gastosEnvio;
+        return total;
+    }
 
     const cantidadesCarrito = () => {
         if (carrito.length > 0) {
@@ -16,7 +37,6 @@ export const CartProvider = ({ children }) => {
             });
 
             let cantidadTotal = cantidades.reduce((a, b) => a + b);
-            console.log(cantidadTotal);
             return cantidadTotal;
         }
     }
@@ -26,10 +46,10 @@ export const CartProvider = ({ children }) => {
         if (!isInCart) {
             setCarrito([...carrito, { item: item, cantidad: cantidad }]);
         } else {
-            carrito.map((producto) => {
+            setCarrito(carrito.map((producto) => {
                 if (producto.item.id === item.id) producto.cantidad = producto.cantidad + cantidad;
                 return producto;
-            })
+            }))
         }
         onAdd();
     }
@@ -38,13 +58,17 @@ export const CartProvider = ({ children }) => {
         let confirmaEliminar = window.confirm('¿Estás seguro que deseas eliminar este producto del carrito?');
         if (confirmaEliminar) {
             setCarrito(carrito.filter(producto => producto.item.id !== id));
-            console.log(carrito);
         }
     };
 
-    const clear = () => setCarrito([]);
+    const clear = () => {
+        let confirmaEliminar = window.confirm('¿Estás seguro que deseas eliminar todos los productos del carrito?');
+        if (confirmaEliminar) {
+            setCarrito([]);
+        }
+    }
 
-    return <CartContext.Provider value={{ carrito, addItem, removeItem, clear, cantidadesCarrito }}>
+    return <CartContext.Provider value={{ carrito, addItem, removeItem, clear, cantidadesCarrito, subtotalCarrito, iva, gastosEnvio, totalCarrito }}>
         {children}
     </CartContext.Provider>
 }

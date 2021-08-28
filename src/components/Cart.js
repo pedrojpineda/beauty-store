@@ -4,37 +4,12 @@ import CartItem from './CartItem';
 import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
-    const { carrito } = useContext(CartContext);
+    const { carrito, subtotalCarrito, iva, gastosEnvio, totalCarrito, clear } = useContext(CartContext);
     const [productosCarrito, setProductosCarrito] = useState([]);
-    const [subtotalCarrito, setSubtotalCarrito] = useState(0);
-    const [iva, setIva] = useState(0.19);
-    const [gastosEnvio, setGastosEnvio] = useState(10000);
-    const [totalCarrito, setTotalCarrito] = useState(0);
-    const [sinProductos, setSinProductos] = useState(true);
-
-    console.log(carrito);
-
-    const totales = () => {
-        let subtotales = carrito.map((producto) => {
-            return producto.cantidad * producto.item.price;
-        });
-        
-        let subtotal = subtotales.reduce((a, b) => a + b);
-        console.log(subtotal);
-        setSubtotalCarrito(subtotal);
-        
-        let total = subtotal + (subtotal * iva) + gastosEnvio;
-        console.log(total);
-        setTotalCarrito(total);
-    }
 
     useEffect(() => {
-        console.log(carrito.length);
-        if (carrito.length > 0) {
-            setProductosCarrito(carrito.map(producto => <CartItem key={producto.item.id} producto={producto} />))
-            totales();
-        }
-    }, []);
+        setProductosCarrito(carrito.map(producto => <CartItem key={producto.item.id} producto={producto} />))
+    }, [carrito]);
 
     return (<>
         <main>
@@ -53,42 +28,46 @@ const Cart = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {carrito.length === 0 ? <tr id="sin-productos"><td colSpan="5">No hay productos en el carrito <br /><NavLink to={'/'} className="boton">Volver al catálogo</NavLink></td></tr> : productosCarrito}
+                            {carrito.length === 0 ? <tr><td colSpan="5">No hay productos en el carrito <br /><NavLink to={'/'} className="boton">Volver al catálogo</NavLink></td></tr> : productosCarrito}
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colSpan="2"></td>
-                                <td>
-                                    <h3>Subtotal</h3>
-                                </td>
-                                <td id="subtotal">$ {subtotalCarrito}</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                            <td colSpan="2"></td>
-                                <td>
-                                    <h3>IVA (19%)</h3>
-                                </td>
-                                <td id="iva">$ {subtotalCarrito * iva}</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                            <td colSpan="2"></td>
-                                <td>
-                                    <h3>Gastos de envío</h3>
-                                </td>
-                                <td id="gastos-envio">$ {gastosEnvio}</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                            <td colSpan="2"></td>
-                                <td>
-                                    <h3>TOTAL</h3>
-                                </td>
-                                <td id="total-compra">$ {totalCarrito}</td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
+                        {carrito.length > 0 ? <>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan="2"></td>
+                                    <td>
+                                        <h3>Subtotal</h3>
+                                    </td>
+                                    <td id="subtotal">$ {subtotalCarrito()}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="2"></td>
+                                    <td>
+                                        <h3>IVA (19%)</h3>
+                                    </td>
+                                    <td id="iva">$ {subtotalCarrito() * iva}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="2"></td>
+                                    <td>
+                                        <h3>Gastos de envío</h3>
+                                    </td>
+                                    <td id="gastos-envio">$ {gastosEnvio}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="2"></td>
+                                    <td>
+                                        <h3>TOTAL</h3>
+                                    </td>
+                                    <td id="total-compra">$ {totalCarrito()}</td>
+                                    <td><a href="#" onClick={() => { clear() }}>
+                                        <i className="fas fa-trash"></i><br />Vaciar<br />carrito</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </> : <></>}
                     </table>
                 </div>
             </section>
