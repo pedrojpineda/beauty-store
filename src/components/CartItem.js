@@ -10,7 +10,7 @@ const CartItem = ({ producto }) => {
         return (
             <tr>
                 <td>
-                    <img className="img-fluid" src={`../imagenes/${item.category}/${item.pictureUrl}`} alt={item.title} />
+                    <img className="img-fluid" src={`../imagenes/${item.categoryName}/${item.pictureUrl}`} alt={item.title} />
                 </td>
                 <td className="producto-carrito">
                     <h2 className="h3">{item.title}</h2>

@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import ItemList from './ItemList'
-import { categories } from '../apis/dataBases';
+import { getFirestore } from '../firebase';
 import { useParams } from 'react-router-dom';
 
 const ItemListContainer = () => {
     const [category, setCategory] = useState([]);
     const { categoryId } = useParams();
-    
+
     useEffect(() => {
+        const db = getFirestore();
+        const categoriesCollection = db.collection("categories");
         if (!categoryId) {
-            setCategory(categories.map(category => <ItemList key={category.id} categoria={category}/>));
+            categoriesCollection.get().then(querySnapshot => {
+                if (querySnapshot.size === 0) {
+                    console.log("No se encontraron categorías");
+                };
+                setCategory(querySnapshot.docs.map(category => <ItemList key={category.data().name} categoryId={categoryId} categoria={category.data()} />));
+            })
+                .catch((error) => console.log(error));
         } else {
-            setCategory(<ItemList categoria={categories.find( categoria => categoria.id === categoryId)}/>);
+            const categoryFromParam = categoriesCollection.where('name', '==', categoryId);
+            categoryFromParam.get().then(querySnapshot => {
+                if (querySnapshot.size === 0) {
+                    console.log("No se encontró la categoría");
+                };
+                setCategory(querySnapshot.docs.map(category => <ItemList categoryId={categoryId} categoria={category.data()} />));
+            })
+            .catch((error) => console.log(error));
         };
-    },[categoryId]);
+    }, [categoryId]);
 
     return (
         <main>

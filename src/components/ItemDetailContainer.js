@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import ItemDetail from './ItemDetail';
-import getItems from '../apis/dataBases';
+import { getFirestore } from '../firebase';
 import { useParams } from 'react-router-dom';
 
 const ItemDetailContainer = () => {
     const [producto, setProducto] = useState([]);
     const { itemId } = useParams();
-    
+
     useEffect(() => {
-        getItems().then(productos => {
-            setProducto(<ItemDetail item={productos.find( item => item.id === Number(itemId))} />);
+        const db = getFirestore();
+        const itemsCollection = db.collection("items");
+        const item = itemsCollection.doc(itemId);
+        item.get().then(producto => {
+            if (!producto.exists) {
+                console.log("No se encontró el item");
+                return;
+            }
+            setProducto(<ItemDetail item={{id: producto.id, ...producto.data()}} />);
         });
-        
-    },[itemId]);
+
+    }, [itemId]);
 
     return (
         <main>

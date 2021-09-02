@@ -2,8 +2,8 @@ import React, { useState }from "react";
 import ItemCount, {} from "./ItemCount";
 import { NavLink } from 'react-router-dom';
 
-const ItemDetail = ({item}) => {
-    const { title, category, price, description, pictureUrl } = item;
+const ItemDetail = ({ item }) => {
+    const { id, title, categoryName, price, description, pictureUrl } = item;
     const [ cantidadCount, setCantidadCount ] = useState(0);
     const [ showItemCount, setShowItemCount ] = useState(true);
 
@@ -15,7 +15,7 @@ const ItemDetail = ({item}) => {
                         <div className="producto text-center">
                             <div>
                                 <img className="img-fluid"
-                                    src={`../imagenes/${category}/${pictureUrl}`} 
+                                    src={`../imagenes/${categoryName}/${pictureUrl}`} 
                                     alt={title} />
                             </div>
                         </div>
