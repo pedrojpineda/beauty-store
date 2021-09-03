@@ -4,7 +4,7 @@ import CartItem from './CartItem';
 import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
-    const { carrito, subtotalCarrito, iva, gastosEnvio, totalCarrito, clear } = useContext(CartContext);
+    const { carrito, subtotalCarrito, iva, gastosEnvio, totalCarrito, clear, addOrder } = useContext(CartContext);
     const [productosCarrito, setProductosCarrito] = useState([]);
 
     useEffect(() => {
@@ -70,6 +70,29 @@ const Cart = () => {
                         </> : <></>}
                     </table>
                 </div>
+                <form>
+                    <div className="row g-3 align-items-center justify-content-center text-center">
+                        <div className="col-auto">
+                            <label for="name" className="col-form-label">Nombre y Apellidos</label>
+                        </div>
+                        <div className="col-auto">
+                            <input type="text" id="name" name="name" className="form-control" />
+                        </div>
+                        <div className="col-auto">
+                            <label for="phone" className="col-form-label">Teléfono</label>
+                        </div>
+                        <div className="col-auto">
+                            <input type="number" id="phone" name="phone" className="form-control" />
+                        </div>
+                        <div className="col-auto">
+                            <label for="email" className="col-form-label">Email</label>
+                        </div>
+                        <div className="col-auto">
+                            <input type="email" id="email" name="email" className="form-control" />
+                        </div>
+                        <a className="boton" onClick={() => {addOrder()}} type="button">Hacer pedido</a>
+                    </div>
+                </form>
             </section>
         </main>
     </>

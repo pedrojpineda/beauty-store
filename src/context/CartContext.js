@@ -1,9 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
+import { getFirestore } from '../firebase';
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 export const CartContext = createContext({});
 
 export const CartProvider = ({ children }) => {
     const [carrito, setCarrito] = useState([]);
+    const [orderId, setOrderId] = useState(null);
     const [iva, setIva] = useState(0.19);
     const [gastosEnvio, setGastosEnvio] = useState(10000);
 
@@ -66,9 +70,48 @@ export const CartProvider = ({ children }) => {
         if (confirmaEliminar) {
             setCarrito([]);
         }
-    }
+    };
 
-    return <CartContext.Provider value={{ carrito, addItem, removeItem, clear, cantidadesCarrito, subtotalCarrito, iva, gastosEnvio, totalCarrito }}>
+    const addOrder = () => {
+        const newOrder = {
+            buyer: {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value
+            },
+            items: carrito.map(({ item, cantidad }) => ({
+                item: {
+                    id: item.id,
+                    title: item.title,
+                    price: item.price
+                },
+                cantidad: cantidad
+            })),
+            date: firebase.firestore.Timestamp.fromDate(new Date()),
+            total: totalCarrito()
+        };
+
+        const db = getFirestore();
+        const orders = db.collection("orders");
+        const batch = db.batch();
+
+        orders.add(newOrder).then(({ id }) => {
+            carrito.forEach(({ item, cantidad }) => {
+                const docRef = db.collection("items").doc(item.id);
+                batch.update(docRef, {stock: item.stock - cantidad})
+            });
+            batch.commit();
+            setOrderId(id);
+            alert('Su pedido ha sido creado con el identificador ' + id);
+            
+        }).catch(err => {
+            console.log(err);
+        });
+    };
+
+
+
+    return <CartContext.Provider value={{ carrito, addItem, removeItem, clear, cantidadesCarrito, subtotalCarrito, iva, gastosEnvio, totalCarrito, addOrder }}>
         {children}
     </CartContext.Provider>
 }
