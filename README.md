@@ -24,4 +24,4 @@ Así mismo, podrás ver los errores en la consola.
 Pedro José Pineda Angarita
 
 ## Demo
-<iframe src="https://drive.google.com/file/d/1dEJpxJ7AuX1rBZVqKhE4qjogbsvEctiN/preview" width="640" height="480"></iframe>
+https://drive.google.com/file/d/1dEJpxJ7AuX1rBZVqKhE4qjogbsvEctiN/view
