@@ -72,46 +72,56 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    const addOrder = () => {
-        const newOrder = {
-            buyer: {
-                name: document.getElementById('name').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value
-            },
-            items: carrito.map(({ item, cantidad }) => ({
-                item: {
-                    id: item.id,
-                    title: item.title,
-                    price: item.price
+    const addOrder = (event) => {
+        const user = {
+            name: document.getElementById('name').value,
+            lastname: document.getElementById('lastname').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email1').value
+        }
+        if (carrito.length > 0) {
+            const newOrder = {
+                buyer: {
+                    name: user.name,
+                    lastname: user.lastname,
+                    phone: user.phone,
+                    email: user.email
                 },
-                cantidad: cantidad
-            })),
-            date: firebase.firestore.Timestamp.fromDate(new Date()),
-            total: totalCarrito()
-        };
+                items: carrito.map(({ item, cantidad }) => ({
+                    item: {
+                        id: item.id,
+                        title: item.title,
+                        description: item.description,
+                        price: item.price
+                    },
+                    cantidad: cantidad
+                })),
+                date: firebase.firestore.Timestamp.fromDate(new Date()),
+                total: totalCarrito(),
+                estado: 'generada'
+            };
 
-        const db = getFirestore();
-        const orders = db.collection("orders");
-        const batch = db.batch();
+            const db = getFirestore();
+            const orders = db.collection("orders");
+            const batch = db.batch();
 
-        orders.add(newOrder).then(({ id }) => {
-            carrito.forEach(({ item, cantidad }) => {
-                const docRef = db.collection("items").doc(item.id);
-                batch.update(docRef, {stock: item.stock - cantidad})
+            orders.add(newOrder).then(({ id }) => {
+                carrito.forEach(({ item, cantidad }) => {
+                    const docRef = db.collection("items").doc(item.id);
+                    batch.update(docRef, { stock: item.stock - cantidad })
+                });
+                batch.commit();
+                setOrderId(id);
+            }).catch(err => {
+                console.log(err);
             });
-            batch.commit();
-            setOrderId(id);
-            alert('Su pedido ha sido creado con el identificador ' + id);
-            
-        }).catch(err => {
-            console.log(err);
-        });
+        }
+        event.preventDefault();
     };
 
 
 
-    return <CartContext.Provider value={{ carrito, addItem, removeItem, clear, cantidadesCarrito, subtotalCarrito, iva, gastosEnvio, totalCarrito, addOrder }}>
+    return <CartContext.Provider value={{ carrito, addItem, removeItem, clear, cantidadesCarrito, subtotalCarrito, iva, gastosEnvio, totalCarrito, addOrder, orderId }}>
         {children}
     </CartContext.Provider>
 }

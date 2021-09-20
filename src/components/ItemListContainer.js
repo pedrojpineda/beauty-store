@@ -32,7 +32,6 @@ const ItemListContainer = () => {
 
     return (
         <main>
-            <h1>Medicamentos, productos de belleza y de cuidado de la piel</h1>
             {category}
         </main>
     );

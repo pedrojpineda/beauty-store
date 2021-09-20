@@ -3,8 +3,11 @@
 Aplicativo web de tienda online desarrollado con React.
 
 ## Construido con
-React https://es.reactjs.org/
-Bootstrap V.5.0 https://getbootstrap.com/
+<ul>
+    <li>React https://es.reactjs.org/</li>
+    <li>Bootstrap V.5.0 https://getbootstrap.com/ - Usado especialmente para estilos de grid y espaciado</li>
+    <li>Firebase https://firebase.google.com/ - Usado como base de datos</li>
+</ul>
 
 ## Comenzando
 Para el desarrollo de este aplicativo se utilizó Create React App el cual configura tu ambiente de desarrollo de forma que puedas usar las últimas características de Javascript, brindando una buena experiencia de desarrollo, y optimizando tu aplicación para producción. Necesitarás tener Node >= 10.16 y npm >= 5.6 instalados en tu máquina. 
@@ -21,4 +24,4 @@ Así mismo, podrás ver los errores en la consola.
 Pedro José Pineda Angarita
 
 ## Demo
-https://drive.google.com/file/d/1Dgn_Bd8mNDmAxFagKuWFtzVYYMhXsuT5/view
+<iframe src="https://drive.google.com/file/d/1dEJpxJ7AuX1rBZVqKhE4qjogbsvEctiN/preview" width="640" height="480"></iframe>

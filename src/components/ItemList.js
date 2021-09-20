@@ -13,7 +13,7 @@ const ItemList = ({ categoria, categoryId }) => {
         const db = getFirestore();
         const itemsCollection = db.collection("items");
         if (!categoryId) {
-            const categoryNoParam = itemsCollection.where('categoryName', '==', name).limit(2);
+            const categoryNoParam = itemsCollection.where('categoryName', '==', name).limit(3);
             categoryNoParam.get().then(querySnapshot => {
                 if (querySnapshot.size === 0) {
                     console.log("No se encontraron items");
@@ -42,7 +42,7 @@ const ItemList = ({ categoria, categoryId }) => {
                 <div className="row flex">
                     {categoryProducts}
                 </div>
-                {!categoryId && <NavLink className="boton" to={`/category/${name}`}>Ver más productos de {categoryTitle}</NavLink>}
+                {!categoryId && <NavLink className="boton" to={`/categories/${name}`}>Ver más productos de {categoryTitle}</NavLink>}
             </div>
         </section>
     );

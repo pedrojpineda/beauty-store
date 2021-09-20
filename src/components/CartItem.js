@@ -19,7 +19,7 @@ const CartItem = ({ producto }) => {
                     {cantidad}
                 </td>
                 <td>$ {item.price * cantidad}</td>
-                <td><a href="#" onClick={() => { removeItem(item.id) }}><i className="fas fa-trash"></i></a></td>
+                <td><button type="button" onClick={() => { removeItem(item.id) }}><i className="fas fa-trash"></i></button></td>
             </tr>
         );
     }

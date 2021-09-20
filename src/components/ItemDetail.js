@@ -1,9 +1,9 @@
 import React, { useState }from "react";
-import ItemCount, {} from "./ItemCount";
+import ItemCount from "./ItemCount";
 import { NavLink } from 'react-router-dom';
 
 const ItemDetail = ({ item }) => {
-    const { id, title, categoryName, price, description, pictureUrl } = item;
+    const { title, categoryName, price, description, pictureUrl } = item;
     const [ cantidadCount, setCantidadCount ] = useState(0);
     const [ showItemCount, setShowItemCount ] = useState(true);
 
@@ -25,8 +25,8 @@ const ItemDetail = ({ item }) => {
                             <h2>{title}</h2>
                             <p>{description}</p>
                             <span className="precio">$ {price}</span>
-                            {showItemCount && <ItemCount setCantidadCount={setCantidadCount} setShowItemCount={setShowItemCount} initial={1} stock={5} item={item}/>}
-                            {!showItemCount && <><p>Se han agregado <strong> {cantidadCount} </strong>{title} al carrito</p> <NavLink to={'/cart'} className="boton"><i className="fas fa-cash-register"></i>Terminar mi compra</NavLink></>}
+                            <ItemCount setCantidadCount={setCantidadCount} setShowItemCount={setShowItemCount} initial={1} item={item}/>
+                            {!showItemCount && <><p className="mt-3">Se han agregado <strong> {cantidadCount} </strong>{title} al carrito</p> <NavLink to={'/cart'} className="boton"><i className="fas fa-cash-register"></i>Terminar mi compra</NavLink></>}
                         </div>
                     </div>
                 </div>

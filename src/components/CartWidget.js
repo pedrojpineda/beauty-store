@@ -5,7 +5,7 @@ const CartWidget = () => {
     const { cantidadesCarrito } = useContext(CartContext);
 
     return (<>
-        {cantidadesCarrito() > 0 ? <><i className="fas fa-shopping-cart"></i>{cantidadesCarrito()}</> : <></>}
+        <i className="fas fa-shopping-cart"></i>{cantidadesCarrito()}
     </>
     )
 }

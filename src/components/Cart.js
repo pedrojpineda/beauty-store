@@ -4,16 +4,39 @@ import CartItem from './CartItem';
 import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
-    const { carrito, subtotalCarrito, iva, gastosEnvio, totalCarrito, clear, addOrder } = useContext(CartContext);
+    const { carrito, subtotalCarrito, iva, gastosEnvio, totalCarrito, clear, addOrder, orderId } = useContext(CartContext);
     const [productosCarrito, setProductosCarrito] = useState([]);
+    const [buttonDisable, setButtonDisable] = useState(true);
+    const [emailConfirm, setEmailConfirm] = useState(false);
 
     useEffect(() => {
         setProductosCarrito(carrito.map(producto => <CartItem key={producto.item.id} producto={producto} />))
     }, [carrito]);
 
+    const confirmAll = () => {
+        const user = {
+            name: document.getElementById('name').value,
+            lastname: document.getElementById('lastname').value,
+            phone: document.getElementById('phone').value,
+            email1: document.getElementById('email1').value,
+            email2: document.getElementById('email2').value
+        }
+        if (user.name !== '' && user.lastname !== '' && user.phone !== '' && user.email1 !== '' && user.email2 !== '' && user.email1 === user.email2) {
+            setButtonDisable(false);
+        } 
+        else {
+            setButtonDisable(true);
+        }
+        
+        if (user.email1 === user.email2) {
+            setEmailConfirm(false);
+        } else {
+            setEmailConfirm(true);
+        }
+    }
+
     return (<>
         <main>
-            <h1>Medicamentos, productos de belleza y de cuidado de la piel</h1>
             <section className="container-lg">
                 <h2>Carrito</h2>
                 <div className="carrito table-responsive">
@@ -62,37 +85,48 @@ const Cart = () => {
                                         <h3>TOTAL</h3>
                                     </td>
                                     <td id="total-compra">$ {totalCarrito()}</td>
-                                    <td><a href="#" onClick={() => { clear() }}>
-                                        <i className="fas fa-trash"></i><br />Vaciar<br />carrito</a>
+                                    <td><button type="button" onClick={() => { clear() }}>
+                                        <i className="fas fa-trash"></i><br />Vaciar<br />carrito</button>
                                     </td>
                                 </tr>
                             </tfoot>
                         </> : <></>}
                     </table>
                 </div>
-                <form>
-                    <div className="row g-3 align-items-center justify-content-center text-center">
-                        <div className="col-auto">
-                            <label for="name" className="col-form-label">Nombre y Apellidos</label>
+                {carrito.length > 0 ? <>
+                    <h2 className="mt-5">Registra tus datos</h2>
+                    <form onSubmit={addOrder}>
+                        <div className="row g-3 justify-content-center text-center">
+                            <div className="col-auto">
+                                <label for="name" className="col-form-label fw-bold">Nombre(s)</label>
+                                <input type="text" id="name" name="name" className="form-control" onKeyUp={confirmAll} required />
+                            </div>
+                            <div className="col-auto">
+                                <label for="lastname" className="col-form-label fw-bold">Apellidos</label>
+                                <input type="text" id="lastname" name="lastname" className="form-control" onKeyUp={confirmAll} required />
+                            </div>
+                            <div className="col-auto">
+                                <label for="phone" className="col-form-label fw-bold">Teléfono</label>
+                                <input type="number" id="phone" name="phone" className="form-control" onKeyUp={confirmAll} required />
+                            </div>
+                            <div className="col-auto">
+                                <label for="email1" className="col-form-label fw-bold">Email</label>
+                                <input type="email" id="email1" name="email1" className="form-control" onKeyUp={confirmAll} required />
+                            </div>
+                            <div className="col-auto">
+                                <label for="email2" className="col-form-label fw-bold">Confirmación de Email</label>
+                                <input type="email" id="email2" name="email2" className="form-control" onKeyUp={confirmAll} required />
+                                {emailConfirm && <p className="text-center text-danger">El email no coincide</p>}
+                            </div>
+                            <button type="submit" className="boton" disabled={buttonDisable}>Realizar compra</button>
                         </div>
-                        <div className="col-auto">
-                            <input type="text" id="name" name="name" className="form-control" />
-                        </div>
-                        <div className="col-auto">
-                            <label for="phone" className="col-form-label">Teléfono</label>
-                        </div>
-                        <div className="col-auto">
-                            <input type="number" id="phone" name="phone" className="form-control" />
-                        </div>
-                        <div className="col-auto">
-                            <label for="email" className="col-form-label">Email</label>
-                        </div>
-                        <div className="col-auto">
-                            <input type="email" id="email" name="email" className="form-control" />
-                        </div>
-                        <a className="boton" onClick={() => {addOrder()}} type="button">Hacer pedido</a>
+                    </form>
+                </> : <></>}
+                {orderId &&
+                    <div class="alert alert-success mt-5 text-center" role="alert">
+                        Su pedido ha sido creado con el identificador <strong>{orderId}</strong>
                     </div>
-                </form>
+                }
             </section>
         </main>
     </>

@@ -3,7 +3,7 @@ import CartWidget from './CartWidget';
 import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
-    return (
+    return (<>
         <header>
             <div className="container">
                 <nav className="navbar navbar-expand-md navbar-light bg-transparent">
@@ -23,19 +23,20 @@ const NavBar = () => {
                                     Categorías
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><NavLink to={'/category/belleza-cuidado-piel'} className="dropdown-item">Belleza y
+                                    <li><NavLink to={'/categories/belleza-cuidado-piel'} className="dropdown-item">Belleza y
                                         Cuidado de la Piel</NavLink></li>
-                                    <li><NavLink to={'/category/nutricion'} className="dropdown-item">Nutrición</NavLink></li>
-                                    <li><NavLink to={'/category/medicamentos'} className="dropdown-item">Medicamentos</NavLink></li>
+                                    <li><NavLink to={'/categories/nutricion'} className="dropdown-item">Nutrición</NavLink></li>
+                                    <li><NavLink to={'/categories/medicamentos'} className="dropdown-item">Medicamentos</NavLink></li>
                                 </ul>
                             </li>
-                            <li className="nav-item"><a href="/">Blog</a></li>
                             <li className="nav-item"><NavLink to={'/cart'}><CartWidget /></NavLink></li>
                         </ul>
                     </div>
                 </nav>
             </div>
         </header>
+        <h1>Medicamentos, productos de belleza y de cuidado de la piel</h1>
+        </>
     )
 }
 export default NavBar;
